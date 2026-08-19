@@ -1,0 +1,1238 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>SagiAI</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #ffe4ef,
+                    #ffd1e3
+                );
+
+            /*
+             * IMPORTANT:
+             * Do NOT vertically center the whole page.
+             * Results can become very long.
+             */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+
+            padding: 35px 0;
+
+            color: #4a2334;
+        }
+
+
+        .container {
+
+            width: 90%;
+            max-width: 1100px;
+
+            background: #fff7fa;
+
+            border-radius: 30px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 15px 40px
+                rgba(160, 70, 110, 0.18);
+
+            text-align: center;
+
+            /*
+             * Prevent long results from breaking the page.
+             */
+            min-height: 500px;
+        }
+
+
+        .heart {
+
+            font-size: 75px;
+
+            margin-bottom: 5px;
+
+            animation:
+                heartbeat 1.5s infinite;
+        }
+
+
+        @keyframes heartbeat {
+
+            0% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.08);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+
+            60% {
+                transform: scale(1.08);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+
+        h1 {
+
+            margin: 0;
+
+            color: #d94d82;
+
+            font-size: 38px;
+        }
+
+
+        .subtitle {
+
+            margin-top: 10px;
+
+            color: #815468;
+
+            font-size: 16px;
+        }
+
+
+        textarea {
+
+            width: 100%;
+
+            min-height: 180px;
+
+            resize: vertical;
+
+            margin-top: 25px;
+
+            padding: 18px;
+
+            border-radius: 18px;
+
+            border: 2px solid #f1b5cb;
+
+            background: white;
+
+            font-size: 16px;
+
+            outline: none;
+
+            color: #4a2334;
+        }
+
+
+        textarea:focus {
+
+            border-color: #d94d82;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(217, 77, 130, 0.1);
+        }
+
+
+        button {
+
+            border: none;
+
+            background: #d94d82;
+
+            color: white;
+
+            padding: 14px 30px;
+
+            border-radius: 30px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 18px;
+
+            transition: 0.2s;
+        }
+
+
+        button:hover {
+
+            background: #c43e70;
+
+            transform: translateY(-1px);
+        }
+
+
+        #questions {
+
+            margin-top: 30px;
+
+            text-align: left;
+        }
+
+
+        .question-card {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 22px;
+
+            margin-bottom: 18px;
+
+            border: 1px solid #f2c2d4;
+        }
+
+
+        .question-card h3 {
+
+            margin-top: 0;
+
+            color: #b73568;
+
+            font-size: 18px;
+        }
+
+
+        .question-card input {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border-radius: 12px;
+
+            border: 1px solid #e5a9c1;
+
+            font-size: 16px;
+        }
+
+
+        .option {
+
+            display: block;
+
+            margin: 10px 0;
+
+            padding: 12px;
+
+            border-radius: 12px;
+
+            background: #fff0f5;
+
+            cursor: pointer;
+        }
+
+
+        .option:hover {
+
+            background: #ffe0eb;
+        }
+
+
+        .option input {
+
+            width: auto;
+
+            margin-right: 8px;
+        }
+
+
+        #results {
+
+            margin-top: 30px;
+
+            text-align: left;
+
+            width: 100%;
+        }
+
+
+        .result-card {
+
+            background: white;
+
+            border-radius: 20px;
+
+            padding: 22px;
+
+            margin-bottom: 18px;
+
+            border-left: 5px solid #d94d82;
+
+            /*
+             * Prevent text from overflowing horizontally.
+             */
+            overflow-wrap: anywhere;
+
+            word-wrap: break-word;
+        }
+
+
+        .result-card h3 {
+
+            color: #b73568;
+
+            margin-top: 0;
+
+            font-size: 21px;
+        }
+
+
+        .score {
+
+            font-weight: bold;
+
+            color: #d94d82;
+
+            margin-bottom: 12px;
+        }
+
+
+        .prediction {
+
+            text-align: center;
+
+            background: #ffe6f0;
+
+            border-radius: 22px;
+
+            padding: 25px;
+
+            margin-top: 25px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .prediction h2 {
+
+            color: #c43e70;
+
+            margin-top: 0;
+        }
+
+
+        .probability {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            color: #d94d82;
+
+            margin-top: 12px;
+        }
+
+
+        .prediction-label {
+
+            color: #815468;
+
+            font-size: 15px;
+
+            margin-top: 5px;
+        }
+
+
+        .error {
+
+            color: #b00045;
+
+            background: #ffe1eb;
+
+            padding: 15px;
+
+            border-radius: 15px;
+
+            margin-top: 20px;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        .loading {
+
+            margin-top: 20px;
+
+            color: #a34267;
+        }
+
+
+        /*
+         * Mobile layout
+         */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 15px 0;
+            }
+
+            .container {
+
+                width: 96%;
+
+                padding: 25px;
+
+                border-radius: 22px;
+            }
+
+            .heart {
+
+                font-size: 60px;
+            }
+
+            h1 {
+
+                font-size: 30px;
+            }
+
+            .result-card {
+
+                padding: 18px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <div class="heart">💗</div>
+
+    <h1>SagiAI</h1>
+
+    <div class="subtitle">
+        Tell me what happened, and I'll analyse the relationship patterns.
+    </div>
+
+
+    <textarea
+        id="story"
+        placeholder="Tell me what happened..."
+    ></textarea>
+
+
+    <button onclick="analyseStory()">
+        Analyse My Story
+    </button>
+
+
+    <div id="loading"
+         class="loading"
+         style="display:none;">
+        SagiAI is analysing your story...
+    </div>
+
+
+    <div id="questions"></div>
+
+
+    <div id="results"></div>
+
+</div>
+
+
+<script>
+
+let currentStory = "";
+
+let currentFeatures = {};
+
+let currentQuestions = [];
+
+
+// =========================================================
+// ANALYSE STORY
+// =========================================================
+
+async function analyseStory() {
+
+    const story =
+        document.getElementById("story").value.trim();
+
+
+    if (!story) {
+
+        alert("Please tell me what happened.");
+
+        return;
+    }
+
+
+    currentStory = story;
+
+    currentFeatures = {};
+
+    currentQuestions = [];
+
+
+    document.getElementById("questions").innerHTML = "";
+
+    document.getElementById("results").innerHTML = "";
+
+    showLoading(true);
+
+
+    try {
+
+        const response =
+            await fetch("/advice", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    story: story
+                })
+            });
+
+
+        const data =
+            await response.json();
+
+
+        showLoading(false);
+
+
+        if (!response.ok) {
+
+            showError(data.error);
+
+            return;
+        }
+
+
+        currentFeatures =
+            data.features || {};
+
+
+        if (data.status === "questions") {
+
+            currentQuestions =
+                data.questions || [];
+
+            showQuestions(
+                currentQuestions
+            );
+
+        } else {
+
+            showResults(data);
+
+        }
+
+
+    } catch (error) {
+
+        showLoading(false);
+
+        showError(
+            "Could not connect to SagiAI."
+        );
+
+        console.error(error);
+    }
+}
+
+
+// =========================================================
+// SHOW QUESTIONS
+// =========================================================
+
+function showQuestions(questions) {
+
+    const container =
+        document.getElementById("questions");
+
+
+    container.innerHTML = "";
+
+
+    if (!questions || questions.length === 0) {
+
+        showError(
+            "SagiAI could not determine what additional information is needed."
+        );
+
+        return;
+    }
+
+
+    const title =
+        document.createElement("h2");
+
+    title.innerText =
+        "I need a little more information";
+
+    title.style.color = "#c43e70";
+
+    container.appendChild(title);
+
+
+    questions.forEach(function(question) {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "question-card";
+
+
+        const heading =
+            document.createElement("h3");
+
+        heading.innerText =
+            question.question;
+
+        card.appendChild(heading);
+
+
+        if (question.type === "number") {
+
+            const input =
+                document.createElement("input");
+
+            input.type = "number";
+
+            input.id =
+                "answer_" + question.feature;
+
+            input.min =
+                question.min ?? 0;
+
+            input.max =
+                question.max ?? 100000;
+
+            input.placeholder =
+                "Enter a number";
+
+
+            card.appendChild(input);
+
+        }
+
+
+        if (question.type === "choice") {
+
+            (question.options || []).forEach(function(option) {
+
+                const label =
+                    document.createElement("label");
+
+                label.className =
+                    "option";
+
+
+                const radio =
+                    document.createElement("input");
+
+                radio.type =
+                    "radio";
+
+                radio.name =
+                    question.feature;
+
+                radio.value =
+                    option.value;
+
+
+                label.appendChild(radio);
+
+                label.appendChild(
+                    document.createTextNode(
+                        " " + option.label
+                    )
+                );
+
+
+                card.appendChild(label);
+
+            });
+
+        }
+
+
+        container.appendChild(card);
+
+    });
+
+
+    const submitButton =
+        document.createElement("button");
+
+    submitButton.innerText =
+        "Continue";
+
+    submitButton.onclick =
+        submitAnswers;
+
+
+    container.appendChild(
+        submitButton
+    );
+
+
+    container.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+
+// =========================================================
+// SUBMIT ANSWERS
+// =========================================================
+
+async function submitAnswers() {
+
+    const cards =
+        document.querySelectorAll(
+            ".question-card"
+        );
+
+
+    const answers = {};
+
+
+    cards.forEach(function(card) {
+
+        const input =
+            card.querySelector(
+                "input[type='number']"
+            );
+
+
+        if (input) {
+
+            if (input.value.trim() !== "") {
+
+                const feature =
+                    input.id.replace(
+                        "answer_",
+                        ""
+                    );
+
+                answers[feature] =
+                    input.value;
+            }
+
+        }
+
+
+        const radio =
+            card.querySelector(
+                "input[type='radio']:checked"
+            );
+
+
+        if (radio) {
+
+            const feature =
+                radio.name;
+
+            answers[feature] =
+                radio.value;
+        }
+
+    });
+
+
+    /*
+     * Do not submit an empty question round.
+     */
+
+    if (Object.keys(answers).length === 0) {
+
+        showError(
+            "Please answer the question before continuing."
+        );
+
+        return;
+    }
+
+
+    showLoading(true);
+
+
+    try {
+
+        const response =
+            await fetch("/answer", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    story: currentStory,
+
+                    features: currentFeatures,
+
+                    answers: answers
+
+                })
+            });
+
+
+        const data =
+            await response.json();
+
+
+        showLoading(false);
+
+
+        if (!response.ok) {
+
+            showError(data.error);
+
+            return;
+        }
+
+
+        currentFeatures =
+            data.features || {};
+
+
+        if (data.status === "questions") {
+
+            /*
+             * The backend should only send genuinely
+             * missing questions.
+             */
+
+            currentQuestions =
+                data.questions || [];
+
+            showQuestions(
+                currentQuestions
+            );
+
+        } else {
+
+            showResults(data);
+
+        }
+
+
+    } catch (error) {
+
+        showLoading(false);
+
+        showError(
+            "Could not connect to SagiAI."
+        );
+
+        console.error(error);
+    }
+}
+
+
+// =========================================================
+// SHOW RESULTS
+// =========================================================
+
+function showResults(data) {
+
+    const container =
+        document.getElementById("results");
+
+
+    container.innerHTML = "";
+
+
+    const heading =
+        document.createElement("h2");
+
+    heading.innerText =
+        "Behavioural Analysis";
+
+    heading.style.color =
+        "#c43e70";
+
+    container.appendChild(
+        heading
+    );
+
+
+    const patterns =
+        data.schema_analysis?.patterns || [];
+
+
+    if (patterns.length === 0) {
+
+        const noPatterns =
+            document.createElement("p");
+
+        noPatterns.innerText =
+            "No behavioural patterns were identified from the information provided.";
+
+        container.appendChild(
+            noPatterns
+        );
+    }
+
+
+    patterns.forEach(function(pattern) {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "result-card";
+
+
+        const title =
+            document.createElement("h3");
+
+        title.innerText =
+            pattern.name || "Behavioural Pattern";
+
+        card.appendChild(title);
+
+
+        const score =
+            document.createElement("div");
+
+        score.className =
+            "score";
+
+        score.innerText =
+            "Score: " +
+            (pattern.score ?? 0) +
+            " / 3";
+
+        card.appendChild(score);
+
+
+        const evidence =
+            document.createElement("p");
+
+        evidence.innerHTML =
+            "<strong>Evidence:</strong> " +
+            escapeHTML(
+                pattern.evidence || "No specific evidence provided."
+            );
+
+        card.appendChild(
+            evidence
+        );
+
+
+        const explanation =
+            document.createElement("p");
+
+        explanation.innerHTML =
+            "<strong>Why:</strong> " +
+            escapeHTML(
+                pattern.explanation || ""
+            );
+
+        card.appendChild(
+            explanation
+        );
+
+
+        if (
+            pattern.possible_interpretations &&
+            pattern.possible_interpretations.length
+        ) {
+
+            const interpretationTitle =
+                document.createElement("p");
+
+            interpretationTitle.innerHTML =
+                "<strong>Possible interpretation:</strong>";
+
+            card.appendChild(
+                interpretationTitle
+            );
+
+
+            pattern.possible_interpretations
+                .forEach(function(text) {
+
+                    const p =
+                        document.createElement("p");
+
+                    p.innerText =
+                        text;
+
+                    card.appendChild(p);
+
+                });
+
+        }
+
+
+        container.appendChild(
+            card
+        );
+
+    });
+
+
+    // =====================================================
+    // PREDICTION
+    // =====================================================
+
+    if (data.prediction) {
+
+        const prediction =
+            document.createElement("div");
+
+        prediction.className =
+            "prediction";
+
+
+        const predictionTitle =
+            document.createElement("h2");
+
+        predictionTitle.innerText =
+            "Prediction";
+
+        prediction.appendChild(
+            predictionTitle
+        );
+
+
+        const predictionText =
+            document.createElement("p");
+
+
+        const value =
+            data.prediction.prediction;
+
+
+        if (value === 1 || value === "1") {
+
+            predictionText.innerText =
+                "The model predicts that contact is more likely.";
+
+        } else {
+
+            predictionText.innerText =
+                "The model predicts that contact is less likely.";
+
+        }
+
+
+        prediction.appendChild(
+            predictionText
+        );
+
+
+        // -------------------------------------------------
+        // PROBABILITY
+        // -------------------------------------------------
+
+        let probability =
+            data.prediction.probability;
+
+
+        /*
+         * Some sklearn models return:
+         *
+         * 0.73
+         *
+         * while others may return:
+         *
+         * 73
+         *
+         * This handles both.
+         */
+
+        if (
+            probability !== undefined &&
+            probability !== null &&
+            probability !== ""
+        ) {
+
+            probability =
+                Number(probability);
+
+
+            if (!Number.isNaN(probability)) {
+
+                if (probability <= 1) {
+
+                    probability =
+                        probability * 100;
+                }
+
+
+                probability =
+                    Math.max(
+                        0,
+                        Math.min(
+                            100,
+                            probability
+                        )
+                    );
+
+
+                const probabilityElement =
+                    document.createElement("div");
+
+                probabilityElement.className =
+                    "probability";
+
+                probabilityElement.innerText =
+                    probability.toFixed(1) + "%";
+
+
+                prediction.appendChild(
+                    probabilityElement
+                );
+
+
+                const probabilityLabel =
+                    document.createElement("div");
+
+                probabilityLabel.className =
+                    "prediction-label";
+
+                probabilityLabel.innerText =
+                    "Estimated probability of contact";
+
+
+                prediction.appendChild(
+                    probabilityLabel
+                );
+
+            }
+
+        }
+
+
+        container.appendChild(
+            prediction
+        );
+
+    }
+
+
+    container.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+
+// =========================================================
+// LOADING
+// =========================================================
+
+function showLoading(show) {
+
+    document.getElementById(
+        "loading"
+    ).style.display =
+        show ? "block" : "none";
+}
+
+
+// =========================================================
+// ERROR
+// =========================================================
+
+function showError(message) {
+
+    const container =
+        document.getElementById("results");
+
+
+    container.innerHTML =
+        `<div class="error">
+            ${escapeHTML(
+                message || "Something went wrong."
+            )}
+        </div>`;
+
+}
+
+
+// =========================================================
+// HTML ESCAPE
+// =========================================================
+
+function escapeHTML(text) {
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+}
+
+</script>
+
+</body>
+
+</html>
+```

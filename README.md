@@ -1,39 +1,31 @@
 # SagiAI 🤖
 
-SagiAI is a machine learning web application built with Python and scikit-learn. The project uses a supervised learning model to analyse user-provided features and generate predictions through a simple web interface.
+SagiAI is a machine learning application designed to analyse behavioural patterns in real-life relationship situations and predict whether a person is likely to break a period of no contact.
 
-The project demonstrates an end-to-end machine learning workflow, including data preparation, model training, prediction, and integration into a web application.
+The model is trained on a structured dataset based on real-life relationship scenarios. By analysing multiple behavioural and situational features, SagiAI identifies patterns associated with different outcomes and uses those patterns to generate a prediction for a new situation.
 
-## Features
+The project was built to explore how supervised machine learning can be applied to behavioural data and translated into an interactive prediction application.
 
-- Data processing and analysis using Pandas
-- Supervised machine learning using scikit-learn
-- Decision Tree Classification
-- Feature-based prediction
-- Flask-based backend
-- Web-based user interface
-- API endpoint for generating predictions
-- Local deployment for development and testing
+## How SagiAI Works
 
-## Machine Learning
+SagiAI follows an end-to-end machine learning workflow:
 
-SagiAI uses a Decision Tree Classifier trained on a structured dataset.
-
-The model learns patterns between the input features and the target variable. Once trained, it can use new input data to generate a prediction.
-
-### Machine Learning Workflow
-Dataset
-   ↓
-Data Preprocessing
-   ↓
-Feature Selection
-   ↓
-Model Training
-   ↓
-Decision Tree Classifier
-   ↓
-Prediction
-   ↓
-Flask API
-   ↓
-Web Application
+Real-Life Relationship Scenarios
+              ↓
+        Structured Dataset
+              ↓
+       Feature Selection
+              ↓
+       Data Preparation
+              ↓
+       Model Training
+              ↓
+    Decision Tree Classifier
+              ↓
+      Behavioural Patterns
+              ↓
+       New User Inputs
+              ↓
+          Prediction
+              ↓
+        Web Application

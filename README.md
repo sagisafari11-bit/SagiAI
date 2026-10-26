@@ -79,10 +79,19 @@ The prediction represents patterns learned from the available training data and 
 - Decision Tree Classifier
 - Flask
 - HTML/CSS
+- Ollama
+- Llama 3.2
 - Git
 - GitHub
+ ## Local AI Setup
 
-## Project Structure
+SagiAI uses Ollama and Llama 3.2 for local AI-powered behavioural analysis.
+
+The AI features require Ollama and the Llama 3.2 model to be installed and running locally. After cloning the repository, users must install [Ollama](https://ollama.com/), download the model using `ollama pull llama3.2`, and run the application on their own computer.
+
+**Note:** The application is not hosted online. The AI features cannot be used directly from GitHub; users must run the application locally.
+
+ ## Project Structure
 SagiAI/
 │
 ├── app.py
@@ -90,6 +99,5 @@ SagiAI/
 ├── schema_local.py
 ├── relationship_cases.csv
 ├── index.html
-├── requirements.txt
 ├── README.md
-└── .gitignore
+

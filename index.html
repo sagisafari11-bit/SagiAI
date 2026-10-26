@@ -479,10 +479,7 @@ let currentFeatures = {};
 
 let currentQuestions = [];
 
-
-// =========================================================
 // ANALYSE STORY
-// =========================================================
 
 async function analyseStory() {
 
@@ -576,10 +573,7 @@ async function analyseStory() {
     }
 }
 
-
-// =========================================================
 // SHOW QUESTIONS
-// =========================================================
 
 function showQuestions(questions) {
 
@@ -720,10 +714,7 @@ function showQuestions(questions) {
     });
 }
 
-
-// =========================================================
 // SUBMIT ANSWERS
-// =========================================================
 
 async function submitAnswers() {
 
@@ -871,10 +862,7 @@ async function submitAnswers() {
     }
 }
 
-
-// =========================================================
 // SHOW RESULTS
-// =========================================================
 
 function showResults(data) {
 
@@ -1015,11 +1003,8 @@ function showResults(data) {
 
     });
 
-
-    // =====================================================
     // PREDICTION
-    // =====================================================
-
+    
     if (data.prediction) {
 
         const prediction =
@@ -1065,11 +1050,8 @@ function showResults(data) {
             predictionText
         );
 
-
-        // -------------------------------------------------
         // PROBABILITY
-        // -------------------------------------------------
-
+        
         let probability =
             data.prediction.probability;
 
@@ -1162,10 +1144,7 @@ function showResults(data) {
     });
 }
 
-
-// =========================================================
 // LOADING
-// =========================================================
 
 function showLoading(show) {
 
@@ -1175,10 +1154,7 @@ function showLoading(show) {
         show ? "block" : "none";
 }
 
-
-// =========================================================
 // ERROR
-// =========================================================
 
 function showError(message) {
 
@@ -1195,10 +1171,7 @@ function showError(message) {
 
 }
 
-
-// =========================================================
 // HTML ESCAPE
-// =========================================================
 
 function escapeHTML(text) {
 

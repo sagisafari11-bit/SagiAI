@@ -1,4 +1,4 @@
-# SagiAI 🤖
+# SagiAI 
 
 SagiAI is a machine learning application that analyses behavioural patterns in real-life relationship situations and predicts whether a person is likely to break a period of no contact.
 
